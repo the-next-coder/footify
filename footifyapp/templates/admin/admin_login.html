@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footify | Admin Login</title>
+
+    <link href="{{url_for('static',filename='assets/dist/css/bootstrap.min.css')}}" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="offset-3 col-md-6 text-center">
+                <img class="mb-4" src="{{url_for('static',filename='images/logo.jpg')}}" alt="" width="72" height="57">
+                <h1 class="h3 mb-3 fw-normal">Footify App</h1>
+                <h3>Admin Login Here</h3>
+                {% with message = get_flashed_messages() %}
+                    {% if message %}
+                        {% for m in message: %}
+                            <div class="alert alert-info">{{m}}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <form method="post" action="{{ url_for('admin_login') }}">
+                    <div class="form-floating mb-3">
+                      <input type="text" name="username" class="form-control">
+                      <label for="username">Username</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                      <input type="password" name="pwd" class="form-control">
+                      <label for="pwd">Password</label>
+                    </div>     
+                    <button class="w-100 btn btn-lg btn-dark" type="submit">Sign in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{% extends "user/base.html" %}
+{% block banner %}
+<!-- products -->
+<div class="col-md">
+<div class="row items mb-4">
+    <div class="col-md-12">
+        <h1 class="text-center mx-3 text-dark">Search results..</h1>
+    </div>
+    {%if products%}
+    {%for p in products%}
+    <div class="col-md-3 my-2 mx-4 card">
+        <div class="card-header">
+            <h3>{{p.product_name}}</h3>
+            <p> <span class="badge bg-warning">Leather material</span> <span class="badge bg-danger">Hand-made</span>&nbsp;<span class="badge bg-success">{{p.prod_cat.category_name}}</span></p>
+        </div>
+
+        <div class="card-img">
+            {%if p.product_img%}
+            <a href="{{url_for('product_details',id=p.product_id)}}"><img src="{{ url_for('static',filename='uploads/'+p.product_img)}}" width="800px" height="800px" class="img-fluid" alt="product{{p.product_id}}"></a>
+            {%endif%}
+        </div>
+        <div class="card-details text-center mt-4">
+            <p class="mb-0">Price</p>
+            <strong class="prod_price_{{p.product_id}}">&#8358;{{p.product_price}}0</strong>
+        </div>
+        <div class="card-sizes">
+            <p>Sizes:</p>
+            <span class="selected">38</span>
+            <span>39</span>
+            <span>40</span>
+            <span>41</span>
+            <span>42</span>
+            <span>43</span>
+        </div>
+        <div class="card-footer">
+            <a href="{{url_for('product_details',id=p.product_id)}}" class="btn btn-warning btn-outline-dark col-12" id="addToCartBtn">Add to Cart</a>
+        </div>
+    </div>
+    {%endfor%}
+</div>
+{%else%}
+<div class="alert alert-info">
+    <h3>Sorry, no results found for your product search!</h3>
+</div>
+{%endif%}
+</div>
+{% endblock %}

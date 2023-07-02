@@ -1,0 +1,49 @@
+{% extends "user/base.html" %}
+{% block style%}
+<style>
+.box{
+    background-color: #be9e44;
+    min-height: 250px;
+    border-radius: 10px;
+}
+.row{
+    justify-content: space-around;
+}
+.box a{
+    text-decoration: none;
+    color: #1a1a1a;
+}
+</style>
+{% endblock %}
+{% block banner %}
+<div class="col-md">
+<div class="row g-3 my-2">
+    <div class="col-md-3 box">
+        <a href="{{url_for('my_profile')}}"><div class="p-3 d-flex justify-content-around align-items-center rounded">
+            <div>
+                <h3 class="fs-1">My profile</h3>
+            </div>
+            <i class="fa-sharp fa-solid fa-user fs-1 primary-text rounded-full secondary-bg p-3"></i>
+        </div></a>
+    </div>
+
+    <div class="col-md-4 box">
+        <a href="{{url_for('my_cart')}}"><div class="p-3 d-flex justify-content-around align-items-center rounded">
+            <div>
+                <h3 class="fs-1">Cart</h3>
+            </div>
+            <i class="fa-solid fa-cart-shopping fs-1 primary-text rounded-full secondary-bg p-3"></i>
+        </div></a>
+    </div>
+
+    <div class="col-md-3 box">
+        <a href="{{url_for('orders')}}"><div class="p-3 d-flex justify-content-around align-items-center rounded">
+            <div>
+                <h3 class="fs-1">Orders</h3>
+            </div>
+            <i class="fa-sharp fa-brands fa-shopify fs-1 primary-text rounded-full secondary-bg p-3"></i>
+        </div></a>
+    </div>  
+</div>
+</div>
+{% endblock %}

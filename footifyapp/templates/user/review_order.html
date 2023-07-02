@@ -1,0 +1,35 @@
+{% extends "user/base.html" %}
+{% block style%}
+<style>
+.review{
+    border: 1px solid #be9e44;
+    border-radius:20px;
+    box-shadow: 3px 2px 1px #be9e44;
+}
+</style>
+{% endblock %}
+{% block banner %}
+<div class="col-md review my-5 mx-5">
+    <h2>Review your order</h2>
+    {% with message = get_flashed_messages() %}
+        {% if message %}
+            {% for m in message: %}
+                <div class="alert alert-info">{{m}}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form action="{{url_for('review_order',id=orderobj.order_id)}}" method="post">
+        <div class="mb-3">
+            <label class="form-label">Your Review:<sup style="color:red">*</sup></label>
+            <div class="col-10">
+                <textarea class="form-control" name="review" cols="40" rows="10"></textarea>
+            </div>
+        </div>
+        <div class="mb-3">
+            <button class="w-100 btn btn-warning btn-outline-dark btn-lg">Submit</button>
+        </div>
+    </form>
+</div>
+<div class="col-md-4">
+</div>
+{% endblock %}

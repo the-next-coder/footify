@@ -1,0 +1,65 @@
+{% extends "user/base.html" %}
+{% block style%}
+<style>
+.cart{
+    min-height: 450px;
+}
+</style>
+{% endblock %}
+{% block banner %}
+<div class="col-md cart">
+    <h1 class="text-center">Cart</h1>
+    {% with message = get_flashed_messages() %}
+	    {% if message %}
+            {% for m in message: %}
+                <div class="alert alert-info">{{m}}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {%if cart_deets%}
+    <table border="1" cellspacing="0" class="table table-light cart-list">
+        <thead class="table-warning">
+            <tr>
+                <th>Product Name</th>
+                <th>Image</th>
+                <th>Size</th>
+                <th class="text-center">Quantity</th>
+                <th>Price Per Unit</th>
+                <th>Total Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for c in cart_deets%}
+            <tr>
+                <td>{{c.cart_content.product_name}}</td>
+                <td><img src="{{ url_for('static',filename='uploads/'+c.cart_content.product_img)}}" class="img-fluid" width="100px" alt="product{{c.cart_content.product_id}}-img"></td>
+                <td><span style="border-radius: 50%;background-color:chocolate">{{c.cart_item_size}}</span></td>
+                <td class="text-center">{{c.cart_item_qty}}</td>
+                <td>&#8358;{{c.cart_content.product_price}}</td>
+                <td>&#8358;{{c.cart_tot_price}}</td>
+                <td><a href="{{url_for('removefrom_cart',id=c.cart_item_id)}}" class="btn btn-warning" onclick="return confirm('Are you sure you want to remove product from your cart?')">Remove</a></td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+
+    <div class="col-6">
+        <a href="{{url_for('home')}}" class="btn btn-warning text-dark"><b>Continue Shopping</b></a>
+    </div>
+    <div class="offset-5 mb-3">
+        <a href="{{url_for('checkout')}}" class="btn btn-warning"><b>Proceed to Checkout</b></a>
+    </div>
+</div>
+{%else%}
+<div class="alert alert-info">
+    <h3>Cart is empty!</h3>
+    <p>Add some products to your cart</p>
+</div>
+{%endif%}
+{% endblock %}
+{% block script %}
+<script>
+
+</script>
+{% endblock %}

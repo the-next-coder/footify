@@ -1,0 +1,67 @@
+{% extends "user/base.html" %}
+{% block style%}
+<style>
+.profile{
+    border: 1px solid #be9e44;
+    border-radius:20px;
+    box-shadow: 3px 2px 1px #be9e44;
+}
+</style>
+{% endblock %}
+{% block banner %}
+<div class="col-md mx-5 my-3 profile">
+    <h1 class="text-center">My Profile</h1>
+    <h3 class="text-center">Personal Info</h3>
+    {% with message = get_flashed_messages() %}
+        {% if message %}
+            {% for m in message: %}
+                <div class="alert alert-info">{{m}}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form action="{{url_for('my_profile')}}" method="post">
+        <div class="mb-3">
+            <label class="form-label">First name:</label>
+            <input type="text" name="fname" class="form-control" value="{{deets.user_fname}}" readonly>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Last name:</label>
+            <input type="text" name="lname" class="form-control" value="{{deets.user_lname}}" readonly>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email address:</label>
+            <input type="email" name="emailaddress" class="form-control" value="{{deets.user_email}}" readonly>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Contact No.:</label>
+            <input type="text" name="phone" class="form-control" placeholder="Enter your phone number" value="{{deets.user_phone}}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">State of Residence:</label>
+            <select name="state" class="form-select mb-3">
+                <option selected value="">Choose your state of residence</option>
+                {% for s in states %}
+                {% if s.state_id == deets.user_stateid %}
+                <option value="{{ s.state_id }}" selected>{{s.state_name}}</option>
+                {% else %}
+                <option value="{{ s.state_id }}">{{s.state_name}}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">City:</label>
+            <input type="text" name="city" class="form-control" placeholder="Enter your city" value="{{deets.user_city}}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Address:</label>
+            <input type="text" name="address" class="form-control" placeholder="Enter your home address" value="{{deets.user_address}}">
+        </div>
+        <div class="mb-3">
+            <button class="w-100 btn btn-lg btn-warning">Update Profile</button>
+        </div>
+    </form>
+</div>
+<div class="col-md-3">
+</div>
+{% endblock %}

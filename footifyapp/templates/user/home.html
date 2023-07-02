@@ -1,0 +1,156 @@
+{% extends "user/base.html" %}
+{% block banner %}
+<div class="col-md-7">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="2000" data-bs-ride="true">
+        <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{{ url_for('static',filename='images/chelsea_boots.jpg') }}" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="{{ url_for('static',filename='images/derby.jpg') }}" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="{{ url_for('static',filename='images/brogues.jpg') }}" class="d-block w-100" alt="...">
+        </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <!-- search -->
+    <div class="mt-5">
+        {% with message = get_flashed_messages() %}
+        {% if message %}
+            {% for m in message: %}
+                <div class="alert alert-info">{{m}}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <form action="{{url_for('search_products')}}" method="post">
+            <div>
+                <input type="search" class="form-control" name="search" placeholder="Search products" style="border:2px solid gold">
+            </div>
+            <div>
+                <button class="btn w-100 btn-warning btn-outline-dark">Search</button>
+            </div>
+        </form>
+    </div>
+    </div>
+    <div class="row col-md-3 flex">
+        <div class="col-md-12">
+            <img src="{{ url_for('static',filename='images/slippers1.jpg') }}" class="img-fluid" alt="amp">
+        </div>
+        <div class="col-md-12">
+            <img src="{{ url_for('static',filename='images/loafer1.jpg') }}" class="img-fluid" alt="samp">
+        </div>
+        <div class="col-md-12">
+            <img src="{{ url_for('static',filename='images/boat.jpg') }}" class="img-fluid" alt="sap">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- products -->
+<div class="row items my-4">
+    <div class="col-md-12">
+        <h1 class="text-center mx-3 text-warning">Check out some of our featured products</h1>
+    </div>
+    {%for p in products%}
+    <div class="col-md-3 my-2 mx-4 card">
+        <div class="card-header">
+            <h3>{{p.product_name}}</h3>
+            <p> <span class="badge bg-warning">Leather material</span> <span class="badge bg-danger">Hand-made</span>&nbsp;<span class="badge bg-success">{{p.prod_cat.category_name}}</span></p>
+        </div>
+
+        <div class="card-img">
+            {%if p.product_img%}
+            <a href="{{url_for('product_details',id=p.product_id)}}"><img src="{{ url_for('static',filename='uploads/'+p.product_img)}}" width="800px" height="800px" class="img-fluid" alt="product{{p.product_id}}"></a>
+            {%endif%}
+        </div>
+        <div class="card-details text-center mt-4">
+            <p class="mb-0">Price</p>
+            <strong class="prod_price_{{p.product_id}}">&#8358;{{p.product_price}}0</strong>
+        </div>
+        <div class="card-sizes">
+            <p>Sizes:</p>
+            <span class="selected">38</span>
+            <span>39</span>
+            <span>40</span>
+            <span>41</span>
+            <span>42</span>
+            <span>43</span>
+        </div>
+        <div class="card-footer">
+            <input type="hidden" value="1" class="form-control prod_qty_{{p.product_id}}" id="prodQty">
+            <input type="hidden" class="prod_img_{{p.product_id}}" value="{{p.product_img}}">
+            <input type="hidden" class="prod_id_{{p.product_id}}" value="{{p.product_id}}">
+            <input type="hidden" class="prod_name_{{p.product_id}}" value="{{p.product_name}}">
+            <a href="{{url_for('product_details',id=p.product_id)}}" class="btn btn-warning btn-outline-dark col-12">View Product</a>
+        </div>
+    </div>
+    {%endfor%}
+    <div class="text-center my-3 p-3">
+        <a href="{{url_for('all_products')}}" class="btn btn-lg btn-warning btn-outline-dark col-8">View More..</a>
+    </div>
+</div>
+
+<!-- categories -->
+<div class="row cat my-3 text-center">
+    <div class="col-md-12">
+        <h1 class="text-center text-warning" id="categories">Top Categories</h1>
+    </div>
+    <div class="col-md-2">
+        <a href="{{url_for('product_category',id=1)}}"><img src="{{ url_for('static',filename='images/slippers1.jpg') }}" width="100%" alt=""></a>
+        <p>Palm Slippers</p>
+    </div>
+    <div class="col-md-2">
+        <a href="{{url_for('product_category',id=2)}}"><img src="{{ url_for('static',filename='images/sandals.jpg') }}" width="100%" alt=""></a>
+        <p>Sandals</p>
+    </div>
+    <div class="col-md-2">
+        <a href="{{url_for('product_category',id=3)}}"><img src="{{ url_for('static',filename='images/brogues.jpg') }}" width="100%" alt=""></a>
+        <p>Brogues</p>
+    </div>
+    <div class="col-md-2">
+        <a href="{{url_for('product_category',id=4)}}"><img src="{{ url_for('static',filename='images/mule1.jpg') }}" width="100%" alt=""></a>
+        <p>Mule Shoes</p>
+    </div>
+    <div class="col-md-2">
+        <a href="{{url_for('product_category',id=5)}}"><img src="{{ url_for('static',filename='images/monkstrap.jpg') }}" width="100%" alt=""></a>
+        <p>MonkStraps</p>
+    </div>
+</div>
+<div class="row cat mt-3 text-center">
+    <div class="col-md-2">
+        <a href="{{url_for('product_category',id=6)}}"><img src="{{ url_for('static',filename='images/derby.jpg') }}" width="100%" alt=""></a>
+        <p>Derby Shoes</p>
+    </div>
+    <div class="col-md-2">
+        <a href="{{url_for('product_category',id=7)}}"><img src="{{ url_for('static',filename='images/oxford.jpeg') }}" width="100%" alt=""></a>
+        <p>Oxford Shoes</p>
+    </div>
+    <div class="col-md-2">
+        <a href="{{url_for('product_category',id=8)}}"><img src="{{ url_for('static',filename='images/boat.jpg') }}" width="100%" alt=""></a>
+        <p>Boat Shoes</p>
+    </div>
+    <div class="col-md-2">
+        <a href="{{url_for('product_category',id=9)}}"><img src="{{ url_for('static',filename='images/loafer1.jpg') }}" width="100%" alt=""></a>
+        <p>Loafers</p>
+    </div>
+    <div class="col-md-2">
+        <a href="{{url_for('product_category',id=10)}}"><img src="{{ url_for('static',filename='images/chelsea_boots.jpg') }}" width="100%" alt=""></a>
+        <p>Chelsea Boots</p>
+    </div>
+</div>
+{% endblock %}

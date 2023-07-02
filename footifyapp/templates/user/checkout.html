@@ -1,0 +1,69 @@
+{% extends "user/base.html" %}
+{% block style%}
+<style>
+.checkout{
+    min-height: 450px;
+}
+</style>
+{% endblock %}
+{% block banner %}
+<div class="offset-1 col-md checkout">
+    <h1 class="text-center">Checkout</h1>
+    {%for c in cart_deets%}
+    <div class="row">
+    <div class="col-md-2">
+        <img src="{{ url_for('static',filename='uploads/'+c.cart_content.product_img)}}" class="img-fluid" width="100px" alt="product{{c.cart_content.product_id}}-img">
+    </div>
+    <div class="col-md-8">
+        <h4>{{c.cart_content.product_name}}</h4>
+        <p>Quantity: {{c.cart_item_qty}}</p>
+        <p>Size: {{c.cart_item_size}}</p>
+    </div>
+    <div class="col-md-2 text-end">
+        <p>&#8358;{{c.cart_tot_price}}</p>
+    </div>
+    </div> 
+    <hr>
+    {%endfor%}
+    <div class="row">
+        <div class="col-md-8">
+            <p>Subtotal:</p>
+            <p>Shipping address:</p>
+            <p>Contact No.:</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <p>&#8358;{{cart_total[0]}}</p>
+            <p>{{userdeets.user_address}}</p>
+            <p>{{userdeets.user_phone}}</p>
+            <div class="mb-3">
+                <a href="{{url_for('my_profile')}}" class="btn btn-warning"><b>Change Address/Phone</b></a>
+            </div>
+            <p>Shipping Fee: &#8358;700</p>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-8">
+           <h4><b>Total:</b></h4>
+        </div>
+        <div class="col-md-4 text-end">
+            <h4><b>NGN &#8358;{{order_total}}</b></h4>
+        </div>
+    </div>
+    <form method="post" action="/checkout/">
+    <div class="offset-5 my-3">
+        <button class="btn btn-warning"><b>Proceed to Order</b></button>
+    </div>
+    <div class="offset-5 mb-3">
+        <a href="{{url_for('my_cart')}}" class="btn btn-warning"><b>Back to Cart</b></a>
+    </div>
+    </form>
+</div>
+<div class="col-md-1">
+</div>
+{% endblock %}
+{% block script %}
+<script>
+
+</script>
+{% endblock %}

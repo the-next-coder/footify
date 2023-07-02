@@ -1,0 +1,39 @@
+{% extends "user/base.html" %}
+{% block style%}
+<style>
+.login_form{
+    border: 1px solid #be9e44;
+    border-radius:20px;
+    box-shadow: 3px 2px 1px #be9e44;
+}
+</style>
+{% endblock %}
+{% block banner %}
+<div class="offset-1 col-md-5 my-5 mx-5 login_form">
+    <h2 class="pt-5">Login</h2>
+    {% with message = get_flashed_messages() %}
+        {% if message %}
+            {% for m in message: %}
+                <div class="alert alert-info">{{m}}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form action="{{url_for('login')}}" method="post">
+        <div class="my-3">
+            <label class="form-label">Email address:</label>
+            <input type="email" name="emailaddress" class="form-control" placeholder="Email address">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Enter Password:</label>
+            <input type="password" name="password" class="form-control" placeholder="Password">
+        </div>
+    
+        <div class="mb-3 text-center">
+            <button class="btn w-100 btn-outline-dark btn-warning btn-lg">Login</button>
+            <a href="{{url_for('forgot_password')}}" class="btn btn-warning btn-outline-dark mt-3">Forgot password?</a>
+        </div>
+    </form>
+</div>
+<div class="col-md-3">
+</div>
+{% endblock %}

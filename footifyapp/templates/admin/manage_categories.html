@@ -1,0 +1,54 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+<h2>Create Category</h2>
+{% with message = get_flashed_messages() %}
+	{% if message %}
+		{% for m in message: %}
+			<div class="alert alert-info">{{m}}</div>
+		{% endfor %}
+	{% endif %}
+{% endwith %}
+<div class="col-6 mb-3">
+	<form action="{{url_for('manage_categories')}}" method="post">
+	<div class="mb-3">
+		<label>Category Name: </label>
+		<input type="text" name="cat_name" placeholder="Enter Category Name">
+	</div>
+	<div class="mb-3">
+		<label>Description: </label>
+		<textarea class="ms-4" name="cat_desc" cols="20" rows="5"></textarea>
+	</div>
+	<div>
+		<button class="btn btn-primary ms-5">Create Category</button>
+	</div>
+	</form>	
+</div>
+
+
+<h2>Manage Categories</h2>
+<table border="1" cellspacing="0" class="table table-light">
+	<thead class="table-primary">
+		<tr>
+			<th>ID</th>
+			<th>Category</th>
+			<th>Description</th>
+			<th>Creation Date</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for c in cat_details %}
+		<tr>
+			<td>{{c.category_id}}.</td>
+			<td>{{c.category_name}}</td>
+			<td>{{c.category_desc}}</td>
+			<td>{{c.date_created}}</td>
+			<td>
+				<a href="{{url_for('delete_category',id=c.category_id)}}" class="btn btn-danger" onclick="return confirm('Do you really want to delete this category?')"><i class="fa fa-trash"></i>Delete</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock content %}

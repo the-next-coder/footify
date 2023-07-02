@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Footify | Admin</title>
+
+	<!-- Bootstrap CSS -->
+	<link href="{{url_for('static',filename='assets/dist/css/bootstrap.min.css')}}" rel="stylesheet">
+		
+	<!-- fontawesome -->
+	<link href="{{ url_for('static',filename='fontawesome/css/all.css') }}" rel="stylesheet" type="text/css">
+
+	<!-- google fonts -->
+	<link href="{{ url_for('static',filename='https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap') }}" rel="stylesheet">
+	
+	<!-- CSS styles -->
+	<link href="{{ url_for('static',filename='css/admin_style.css') }}" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<!-- row1 -->
+		<div class="row navbar">
+			<div class="col-md-8">
+				<h1>Footify Admin Dashboard</h1>
+			</div>
+			<div class="col-md-4 text-end">
+				
+				<h4 class="d-inline">Admin</h4>
+				<img src="{{ url_for('static',filename='images/user.png') }}" width="32" height="32" alt="profile_picture" class="rounded-circle">
+			</div>
+		</div>
+
+		<!-- row2 -->
+		<div class="row">
+			<div class="col-md-2 menu">
+				<ul>
+					<li class="menu-item">
+					 	<a class="menu-link" href="{{url_for('manage_orders')}}">Manage Orders</a>
+					</li>
+					<li class="menu-item">
+					 	<a class="menu-link" href="{{url_for('manage_users')}}">Manage Users</a>
+					</li>
+					<li class="menu-item">
+					 	<a class="menu-link" href="{{url_for('manage_categories')}}">Manage Categories</a>
+					</li>
+					<li class="menu-item">
+					 	<a class="menu-link" href="{{url_for('insert_product')}}">Insert Product</a>
+					</li>
+					<li class="menu-item">
+					 	<a class="menu-link" href="{{url_for('manage_products')}}">Manage Products</a>
+					</li>
+					<li class="menu-item">
+					 	<a class="menu-link" href="{{url_for('admin_dashboard')}}">View Dashboard</a>
+					</li>
+					<hr>
+					<li class="menu-item">
+						<a class="menu-link" href="{{url_for('admin_changepwd')}}">Change Password</a>
+				   </li>
+					<li class="menu-item">
+					 	<a class="menu-link" href="{{url_for('admin_logout')}}">Logout</a>
+					</li>
+				</ul>
+				
+			</div>
+			<div class="row col-md-10 ps-4">
+				{% block content %}
+
+                {% endblock content %}
+			</div>
+		</div>
+	</div>
+</body>
+</html>

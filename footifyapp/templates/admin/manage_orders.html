@@ -1,0 +1,33 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+<h2>Manage Orders</h2>
+<div class="m-0 p-0">
+<table border="1" cellspacing="0" class="table table-light">
+<thead class="table-primary">
+	<tr>
+		<th>Order ID</th>
+		<th>Ordered By</th>
+		<th>Paid Status(=1 if paid)</th>
+		<th>Total Amount Paid</th>
+		<th>Date Ordered</th>
+		<th>Shipping Status</th>
+		<th>Delivery Date</th>
+	</tr>
+</thead>
+<tbody>
+	{% for o in all_orders %}
+	<tr>
+		<td>{{o.order_id}}</td>
+		<td>{{o.ordered_by.user_fname+o.ordered_by.user_lname}}</td>
+		<td>{{o.paid_status}}</td>
+		<td>&#8358;{{o.order_total_amt}}</td>
+		<td>{{o.order_date}}</td>
+		<td>Delivered</td>
+		<td>2023-03-18 11:45:21</td>
+	</tr>
+	{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock content %}

@@ -1,0 +1,94 @@
+{% extends "user/base.html" %}
+{% block style%}
+<style>
+.product{
+    min-height: 450px;
+}
+.card-details{
+    font-size: larger;
+}
+</style>
+{% endblock %}
+{% block banner %}
+<div class="col-md my-3 mx-5 product">
+    <h2 class="text-center">Product details</h2>
+    <div class="col-md card">
+        <div class="card-img">
+            <img src="{{ url_for('static',filename='uploads/'+prod_deets.product_img)}}" class="img-fluid" id="prod_img" alt="product{{prod_deets.product_id}}-img">
+        </div>
+        <div class="card-header text-center">
+            <h5>{{prod_deets.product_name}}</h5>
+            <p>Leather Hand-made</p>
+        </div>
+        <div class="card-desc">
+            <h5>Product description</h5>
+            <p>{{prod_deets.product_desc}}</p>
+        </div>
+        <div class="card-details text-center">
+            <p class="mb-0">Price</p>
+            <strong class="prod_price_{{prod_deets.product_id}}">&#8358;{{prod_deets.product_price}}</strong>
+            <p class="mb-0">Quantity</p>
+            <input type="number" class="form-control prod_qty_{{prod_deets.product_id}}" id="prodQty" min="1" value="1">
+        </div>
+        <div class="card-sizes">
+            <p>Size:</p>
+            <span><input type="radio" name="size" id="size38" value="38" checked>38</span>
+            <span><input type="radio" name="size" id="size39" value="39">39</span>
+            <span><input type="radio" name="size" id="size40" value="40">40</span>
+            <span><input type="radio" name="size" id="size41" value="41">41</span>
+            <span><input type="radio" name="size" id="size42" value="42">42</span>
+            <span><input type="radio" name="size" id="size43" value="43">43</span>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-warning btn-outline-dark col-12 add_to_cart" id="addToCartBtn">Add to Cart</button>
+            <div class="comment"></div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+</div>
+{% endblock %}
+{% block script %}
+<script>
+   $(document).ready(function(){
+    $("#addToCartBtn").click(function(){
+        if($("#size38").prop("checked")){
+            prod_size = $("#size38").val()
+        }else if($("#size39").prop("checked")){
+            prod_size = $("#size39").val()
+        }else if($("#size40").prop("checked")){
+            prod_size = $("#size40").val()
+        }else if($("#size41").prop("checked")){
+            prod_size = $("#size41").val()
+        }else if($("#size42").prop("checked")){
+            prod_size = $("#size42").val()
+        }else if($("#size43").prop("checked")){
+            prod_size = $("#size43").val()
+        }  
+        var qty = $("#prodQty").val();
+        var price = "{{prod_deets.product_price}}"
+        var total_amt = parseInt(qty)*parseInt(price);
+        var id = "{{prod_deets.product_id}}"
+        
+        var data2send = "size="+prod_size+"&amount="+price+"&quantity="+qty+"&total="+total_amt+"&prod_id="+id;
+        //Ajax
+        $.ajax({
+            url:"/addto-cart/",
+            data:data2send,
+            type:"GET",
+            dataType:'text',
+            beforeSend:function(){
+                $("#addToCartBtn").html("Added");
+            },
+            success:function(rsp){
+                $("#comment").html(rsp)
+                $("#addToCartBtn").html("Add to Cart")
+            },
+            error:function(e){
+              console.log(e)
+            }
+        })
+    })
+   })
+</script>
+{% endblock %}

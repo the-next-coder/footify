@@ -1,0 +1,44 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+<h2>Insert Product</h2>
+{% with message = get_flashed_messages() %}
+	{% if message %}
+		{% for m in message: %}
+			<div class="alert alert-info">{{m}}</div>
+		{% endfor %}
+	{% endif %}
+{% endwith %}
+<div class="col-6 mb-3">
+    <form action="{{url_for('insert_product')}}" method="post" enctype="multipart/form-data">				
+    <div class="mb-3">
+        <label>Category</label>
+        <select name="cat_id">
+            <option value="" selected>Select product category</option>
+            {% for c in categories %}
+            <option value="{{c.category_id}}">{{c.category_name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label>Product Name</label>
+        <input type="text" name="prod_name" placeholder="Enter Product Name">
+    </div>
+    <div class="mb-3">
+        <label>Product Price</label>
+        <input type="text" name="prod_price" placeholder="Enter Product Price">
+    </div>
+    <div class="mb-3">
+        <label>Product Description</label>
+        <textarea name="prod_desc" cols="20" rows="5"></textarea>
+    </div>
+    <div class="mb-3">
+        <label>Product Image 1</label>
+        <input type="file" name="prod_img">
+    </div>
+    <div>
+        <button class="btn btn-lg btn-outline-primary text-light px-5 btn-secondary">Insert</button>
+    </div>
+    </form>
+</div>
+{% endblock content %}

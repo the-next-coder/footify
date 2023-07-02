@@ -1,0 +1,29 @@
+{% extends "user/base.html" %}
+{% block style%}
+<style>
+
+</style>
+{% endblock %}
+{% block banner %}
+<div class="col-md text-larger m-5">
+    <h3>Order Confirmation</h3>
+    <img src="{{ url_for('static',filename='images/logo1.jpg') }}" alt="footify logo" class="img-fluid" width="65" height="65" style="border-radius: 50%;">
+    <p>Please confirm your order details as follows:</p>
+    <p>User email:  <b>{{order.ordered_by.user_email}}</b></p>
+    <p>Total amount payable:  <b>&#8358;{{order_total}}</b></p>
+    <p>Reference Number:  <b>{{refno}}</b> <i class="text-danger">Please take note of this</i></p>
+    <form method="post" action="/confirm-order">
+      <a href="/checkout" class="btn btn-lg btn-danger">Back to Checkout</a>
+      <button class="btn btn-lg btn-warning">Confirm and Make Payment</button>
+      
+    </form>
+</div>
+<div class="col-md-3">
+
+</div>
+{% endblock %}
+{% block script %}
+<script>
+
+</script>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "user/base.html" %}
+{% block style%}
+<style>
+.order{
+    min-height: 450px;
+}
+</style>
+{% endblock %}
+{% block banner %}
+<div class="offset-1 col-md order">
+    <h1 class="text-center">Order Details</h1>
+    <div class="row">
+        <div class="col-md-9">
+            <h2><b>Order #{{orderobj.pay_ref}}</b></h3>
+        </div>
+    </div>
+    <hr>
+    {%for o in orderdeets%}
+    <div class="row">
+        <div class="col-md-2">
+            <img src="{{ url_for('static',filename='uploads/'+o.prod_ordered.product_img)}}" class="img-fluid" width="100px" alt="product{{o.prod_ordered.product_id}}-img">
+        </div>
+        <div class="col-md-6">
+        <h4>{{o.prod_ordered.product_name}}</h4>
+            <p>Quantity: {{o.quantity}}</p>
+            <p>Size: {{o.size}}</p>
+        </div>
+        <div class="col-md-2">
+            <p>&#8358;{{o.amount}}</p>
+        </div>
+        <div class="col-md-2 text-end">
+            <p>&#8358;{{o.total}}</p>
+        </div>
+    </div>
+    {%endfor%}
+    <hr>
+    <div class="row">
+        <div class="col-md-1">
+            <i class="fa fa-solid fa-gift fa-3x"></i>
+        </div>
+        <div class="col-md-9">
+            <h5>Estimated delivery: May 18th</h5>
+            <h6>Your order is on its way!</h6>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-7">
+            <h5>Payment</h5>
+            <p>Debit/Credit Card</p>
+        </div>
+        <div class="col-md-5">
+            <h5>Delivery</h5>
+            <h6>Address:</h6>
+            <p>{{orderobj.ordered_by.user_address}}</p>
+        </div>
+    </div>
+</div>
+<div class="col-md-1">
+</div>
+{% endblock %}

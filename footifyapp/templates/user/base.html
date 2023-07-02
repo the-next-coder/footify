@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Footify</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="Footify is an online store for premium and high quality hand-made leather palm slippers, leather sandals and leather shoes for both men and women.">
+		<meta name="keywords" content="online shoe store, palm slippers, leather sandals, hand-made leatherfootwares, unisex palm slippers, walk in style">
+		<meta name="author" content="Umar A. B.">
+		
+		<!-- Bootstrap CSS -->
+		<link href="{{ url_for('static',filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+
+		<!-- fontawesome -->
+		<link href="{{ url_for('static',filename='fontawesome/css/all.css') }}" rel="stylesheet" type="text/css">
+
+		<!-- google fonts -->
+		<link href="{{ url_for('static',filename='https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap') }}" rel="stylesheet">
+		
+		<!-- CSS styles -->
+		<link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet" type="text/css">
+		<style>
+
+		</style>
+        {% block style%}
+        {% endblock %}
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			<!-- header -->
+			<div class="row header text-dark text-center">
+				<div class="col-md">
+					<p class="mb-0">Free shipping of orders above N23,000 within Lagos. Contact us directly on WhatsApp <a href="" target="_blank"><i class="fa-brands fa-whatsapp fa-2x text-success"></i></a> @+2348079077261 for your bespoke footwears.</p>
+					<span>Email: footifyapp@gmail.com</span>
+				</div>
+			</div>
+
+			<!-- menubar -->
+			<div class="row menubar">
+				<div class="col-md">
+					<nav class="navbar navbar-expand-lg navbar-light">
+					  <div class="container-fluid mx-4">
+					  	<a class="navbar-brand mx-3" href="{{url_for('home')}}" style="color:brown;font-size: 30px;"><img src="{{ url_for('static',filename='images/logo1.jpg') }}" alt="footify_logo" class="img-fluid" width="65" height="65" style="border-radius: 50%;"></a>
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+						  <span class="navbar-toggler-icon"></span>
+						</button>
+						<div class="collapse navbar-collapse" id="navbarNavDropdown">
+						  <ul class="navbar-nav">
+							<li class="nav-item mx-3">
+							  <a class="nav-link active" aria-current="page" href="{{url_for('home')}}" style="color:black" id="home">HOME</a>
+							</li>
+							<li class="nav-item mx-3">
+							  <a class="nav-link" href="#" style="color:black;">MEN</a>
+							</li>
+							<li class="nav-item mx-3">
+							  <a class="nav-link" href="#" style="color:black">WOMEN</a>
+							</li>
+							<li class="nav-item mx-3">
+							  <a class="nav-link" href="#" style="color:black">UNISEX</a>
+							</li>
+							<li class="nav-item dropdown mx-3">
+							  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:black;">
+								ACCOUNT
+							  </a>
+							  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								<li><a class="dropdown-item" href="{{url_for('my_profile')}}" style="color:black">My Profile</a></li>
+								<li><a class="dropdown-item" href="{{url_for('my_cart')}}" style="color:black">Cart</a></li>
+								<li><a class="dropdown-item" href="{{url_for('orders')}}" style="color:black">Orders</a></li>
+								{% if session.get('user') != None: %}
+								<li><a class="dropdown-item" href="{{url_for('logout')}}"><button class="btn btn-warning" onclick="return confirm('Do you want to sign out of your account?')">LOGOUT</button></a></li>
+								{%endif%}
+							  </ul>
+							</li>
+							{% if session.get('user') == None: %}
+							<li class="nav-item mx-3 ps-3">
+								<a class="nav-link" href="{{url_for('signup')}}" style="color:black">SIGNUP</a>
+							  </li>
+							  <li class="nav-item mx-3 ps-3">
+								<a class="nav-link" href="{{url_for('login')}}" style="color:black">LOGIN</a>
+							  </li>
+							  {% endif %}
+						  </ul>
+						  <div class="col-md-2 text-end">
+							<a href="{{url_for('my_cart')}}"><i class="fa-solid fa-cart-shopping fa-2x pt-3 text-warning"><span class="badge bg-dark" id="cart_list">{{cart_deets|count}}</span></i><a>
+						</div>
+						</div>
+					  </div>
+					</nav>
+				</div>
+			</div>
+			<!-- header for logged in users -->
+			{% if session.get('user') !=None: %}
+			<header class="p-3 mb-3 border-bottom">
+				<div class="container">
+				<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+				
+					<ul class="member nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-start mb-md-0">
+					<li><a href="{{url_for('dashboard')}}" class="nav-link px-2 " style="color:brown">Dashboard</a></li>
+					<li><a href="{{url_for('my_profile')}}" class="nav-link px-2 link-dark">My profile</a></li>
+					<li><a href="{{url_for('my_cart')}}" class="nav-link px-2 link-dark">Cart</a></li>
+					<li><a href="{{url_for('orders')}}" class="nav-link px-2 link-dark">Orders</a></li>
+					<li><a href="{{url_for('logout')}}" class="nav-link px-2 link-dark" style="color:brown" onclick="return confirm('Do you want to sign out of your account?')">Logout</a></li>
+					</ul>
+
+					
+					<div class="dropdown text-end">
+					<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+						<img src="{{ url_for('static',filename='images/user.png') }}" alt="user_pix" width="32" height="32" class="rounded-circle">
+					</a>
+					<ul class="dropdown-menu text-small">
+						<li><a class="dropdown-item" href="{{ url_for('my_profile') }}">My profile</a></li>
+						<li><a class="dropdown-item" href="{{ url_for('my_cart') }}">Cart</a></li>
+						<li><a class="dropdown-item" href="{{ url_for('orders') }}">Orders</a></li>
+						<li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+					</ul>
+					</div>
+				</div>
+				</div>
+			</header>
+			{% endif %}
+
+			<!-- sidebar -->
+			<div class="row banner">
+				<div class="col-md-2">
+					<div class="col-md-12 ms-3">
+	                    <h1 class="text-secondary mt-4 text-warning" id="categories">Categories</h1>
+                	</div>
+					<ul class="categories">
+						<li><a href="/#categories">Palm Slippers</a></li>
+						<li><a href="/#categories">Sandals</a></li>
+						<li><a href="/#categories">Brogues</a></li>
+						<li><a href="/#categories">Mule Shoes</a></li>
+						<li><a href="/#categories">Monk Straps</a></li>
+						<li><a href="/#categories">Derby</a></li>
+						<li><a href="/#categories">Oxford</a></li>
+						<li><a href="/#categories">Boat</a></li>
+						<li><a href="/#categories">Loafers</a></li>
+						<li><a href="/#categories">Chelsea Boots</a></li>
+						<!-- sidebar for logged in users -->
+						{% if session.get('user') !=None: %}
+						<hr>
+						<li><a href="{{url_for('my_profile')}}">My profile</a></li>
+						<li><a href="{{url_for('my_cart')}}">Cart</a></li>
+						<li><a href="{{url_for('orders')}}">Orders</a></li>
+						{% endif %}
+					</ul>
+				</div>
+                {% block banner %}
+				{% with message = get_flashed_messages() %}
+					{% if message %}
+						{% for m in message: %}
+							<div class="alert alert-info">{{m}}</div>
+						{% endfor %}
+					{% endif %}
+				{% endwith %}
+                {% endblock %}
+			</div>      
+
+            {% block content %}
+
+			
+            {% endblock %}
+            <!-- top arrow -->
+			<div class="top">
+				<a href="#top"><i class="fa fa-angle-double-up fa-3x text-secondary"></i></a>
+			</div>
+			<!-- footer -->
+			<div class="row items footer text-light">
+				<div class="col-md pt-3 ps-3">
+					<h4>Quick Links</h4>
+					<ul>
+						<li>Search</li>
+						<li>Contact Us</li>
+						<li>Blogs</li>
+						<li>Terms of Service</li>
+						<li>Refund Policy</li>
+					</ul>
+				</div>
+				<div class="col-md pt-5">
+					<h2 id="contact_us">Contact Us</h2>
+					<p><b>Email:</b> footifyapp@gmail.com<br>
+						<b>Phone:</b> +2348036367637, +2348028374664
+					</p>
+				</div>
+				<div class="col-md">
+					<i class="fa-brands fa-facebook fa-3x text-light mx-4 mt-5"></i>
+					<i class="fa-brands fa-twitter fa-3x text-light mx-4 mt-5"></i>
+					<i class="fa-brands fa-linkedin fa-3x text-light mx-4 mt-5"></i>
+					<p id="copyright">Copyright &copy;footify.com 2023. All Rights Reserved.</p>
+				</div>
+			</div>
+
+	<!-- JS files -->
+	<script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+	
+		{% block script %}
+		{% endblock %}
+	</body>
+</html>

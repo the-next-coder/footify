@@ -1,0 +1,47 @@
+{% extends "user/base.html" %}
+{% block style%}
+<style>
+.order{
+    min-height: 450px;
+}
+</style>
+{% endblock %}
+{% block banner %}
+<div class="offset-1 col-md order">
+    <h1 class="text-center">Order History</h1>
+    {%if order_deets%}
+    <table border="1" cellspacing="0" class="table table-light">
+        <thead class="table-warning">
+            <tr>
+                <th>S/N</th>
+                <th>Order ID</th>
+                <th>Total Amount Paid</th>
+                <th>Date Ordered</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for o in order_deets %}
+            <tr>
+                <td>{{loop.index}}.</td>
+                <td>{{o.pay_ref}}</td>
+                <td>&#8358;{{o.order_total_amt}}</td>
+                <td>{{o.order_date}}</td>
+                <td>
+                    <a href="{{url_for('order_details',id=o.order_id)}}" class="btn btn-warning btn-outline-dark">View details</a>
+                    <a href="{{url_for('review_order',id=o.order_id)}}" class="btn btn-warning btn-outline-dark">Review order</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+{%else%}
+<div class="alert alert-info">
+    <h3>Your have no orders yet!</h3>
+    <p>Make an order and check back</p>
+</div>
+{%endif%}
+</div>    
+<div class="col-md-1">
+</div>
+{% endblock %}
